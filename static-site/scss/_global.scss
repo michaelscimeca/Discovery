@@ -1,0 +1,183 @@
+// Colors
+
+
+/************************************
+* Hover Mixin
+************************************/
+@mixin hover {
+  .no-touchevents & {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+
+ul {
+  margin: 0;
+  list-style: none;
+
+}
+body {
+  // overflow: hidden;
+  // height: 100vh;
+}
+
+#app {
+ background-color: black;
+ background-image: url('/img/depositphotos_120899118-stock-photo-painting-artistic-bright-color-oil.jpg');
+ background-repeat:  no-repeat;
+ background-size: cover;
+
+ height: 100vh;
+ // min-width: 100%;
+}
+
+#img {
+  width: 500px;
+  height: 300px;
+  background-image: url('/img/bg.png');
+  background-repeat:  no-repeat;
+background-size: contain;
+}
+
+
+canvas {
+  width: 100px;
+  height: calc(100vh - 80px);
+  position: absolute;
+  left: 100px;
+  top: 0;
+}
+
+#vertical-bar {
+  position: fixed;
+  right: 20px;
+  height: 100vh;
+  width: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  #overlay {
+    height: calc(80%);
+    width: 100%;
+    backdrop-filter: blur(14px);
+  }
+
+  &.white {
+    #text {
+      color: #fff;
+    }
+  }
+
+  &.black {
+    #text {
+      color: #000;
+    }
+  }
+}
+
+.logo {
+  position: absolute;
+  height: 45px;
+  width: 45px;
+  left: 0;
+  right: 0;
+  margin: 20px auto 0 auto;
+  background-repeat: no-repeat;
+  background-position: 0px 1px;
+  background-size: contain;
+  background-image: url('/img/logo.svg');
+  stroke: black;
+  stroke-width: 6px;
+  transition: all 250ms ease-in;
+}
+
+#text {
+  writing-mode: vertical-rl;
+  text-align: center;
+  margin: 15px auto 0 auto;
+  font-size: em(22);
+  text-transform: uppercase;
+  color: #000;
+  transition: color 250ms ease-in;
+}
+
+.line {
+  height: 100vh;
+  width: 2px;
+  background-color: red;
+  position: absolute;
+  top: 0;
+  z-index: 333333;
+}
+
+
+ul#sections {
+  li {
+    width: 100vw;
+    height: 100vh;
+    float: left;
+
+    &.white {
+      background-color: #fff;
+
+      &.img {
+        background-image: url('/img/b.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    }
+
+    &.black {
+      background-color: #000;
+      &.img {
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-image: url('/img/a.jpg');
+      }
+    }
+
+  }
+}
+
+
+.text {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+
+
+
+
+  h1 {
+    text-align: center;
+    background-color: black;
+    padding: 15px 30px;
+    color: #fff;
+    font-size: em(30);
+
+  }
+}
+
+
+
+body {
+  font-size: em(12);
+}
+
+h1 {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+#animation {
+  width: 320px;
+  margin: 0 auto;
+}

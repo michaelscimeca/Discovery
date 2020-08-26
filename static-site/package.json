@@ -1,0 +1,69 @@
+{
+  "name": "static-site",
+  "version": "2.0.0",
+  "description": "Static site",
+  "main": "index.js",
+  "engines": {
+    "node": "10.16.0"
+  },
+  "scripts": {
+    "gulp": "ALLOW_CONFIG_MUTATIONS=Y gulp",
+    "gulp-sync": "ALLOW_CONFIG_MUTATIONS=Y gulp bs --live true",
+    "build": "gulp build --env production",
+    "start": "node index"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "iOS 7",
+    "ie >= 9",
+    "and_chr >= 2.3"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:RSQDevelopmentTeam/static-site.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^10.0.0",
+    "browser-sync": "^2.26.5",
+    "browserify": "^16.3.0",
+    "eslint": "^6.1.0",
+    "eslint-config-semistandard": "^14.0.0",
+    "eslint-config-standard": "^13.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^6.1.0",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-if": "^3.0.0",
+    "gulp-livereload": "^4.0.1",
+    "gulp-notify": "^3.2.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
+    "gulp-util": "^3.0.8",
+    "laconic-mixin": "^5.5.4",
+    "minimist": "^1.2.0",
+    "nodemon": "^1.19.1",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  },
+  "dependencies": {
+    "@pixi/filter-blur": "^5.3.3",
+    "backdropper": "^0.1.2",
+    "cookies": "^0.7.3",
+    "express": "^4.17.1",
+    "foundation-sites": "^6.5.3",
+    "gsap": "^3.5.0",
+    "hbs": "^4.0.4",
+    "prismic-dom": "^2.1.0",
+    "prismic-javascript": "^2.1.1"
+  }
+}
