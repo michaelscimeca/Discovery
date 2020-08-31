@@ -45,6 +45,26 @@ app.get('/', (req, res, next) => {
   });
 });
 
+app.get('/detail', (req, res, next) => {
+  req.prismic.api.getSingle('home_page').then((document) => {
+    if (document) {
+      res.render('detail', {
+        // document,
+        title: 'Hello...',
+        description: 'Description',
+        url: `${req.protocol}://${req.get('host')}${req.originalUrl}`,
+        'og_img': '#',
+        'site_name': 'Hello Starter',
+        'author': 'Red Square'
+      });
+    } else {
+      var err = new Error();
+      err.status = 404;
+      next(err);
+    }
+  });
+});
+
 app.get('/:uid', (req, res, next) => {
   req.prismic.api.getByUID('page', req.params.uid).then((document) => {
     if (document) {
