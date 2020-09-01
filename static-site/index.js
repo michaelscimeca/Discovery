@@ -45,10 +45,30 @@ app.get('/', (req, res, next) => {
   });
 });
 
-app.get('/detail', (req, res, next) => {
+app.get('/zoom', (req, res, next) => {
   req.prismic.api.getSingle('home_page').then((document) => {
     if (document) {
-      res.render('detail', {
+      res.render('zoom', {
+        // document,
+        title: 'Hello...',
+        description: 'Description',
+        url: `${req.protocol}://${req.get('host')}${req.originalUrl}`,
+        'og_img': '#',
+        'site_name': 'Hello Starter',
+        'author': 'Red Square'
+      });
+    } else {
+      var err = new Error();
+      err.status = 404;
+      next(err);
+    }
+  });
+});
+
+app.get('/lotti', (req, res, next) => {
+  req.prismic.api.getSingle('home_page').then((document) => {
+    if (document) {
+      res.render('lotti', {
         // document,
         title: 'Hello...',
         description: 'Description',

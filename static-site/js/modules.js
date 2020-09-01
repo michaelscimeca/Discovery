@@ -1,9 +1,9 @@
 var Modules = {
   init: function () {
     // require('./modules/backdrop')();
-    // require('./modules/follow')();
-    require('./modules/zoom')();
-
+    // require('./modules/zoom')();
+    require('./modules/lotti')();
+    
   }
 };
 

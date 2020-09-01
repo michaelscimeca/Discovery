@@ -68,6 +68,7 @@
     "gsap": "^3.5.0",
     "gulp-sync": "^0.1.4",
     "hbs": "^4.0.4",
+    "lottie-web": "^5.7.3",
     "prismic-dom": "^2.1.0",
     "prismic-javascript": "^2.1.1",
     "stats-js": "^1.0.1",
