@@ -36,29 +36,28 @@ module.exports = function () {
         this.flag = true;
         setTimeout(() => this.flag = false, 300);
         const wheelData = normalizeWheel(e);
-
-        this.intro += (wheelData.pixelY * this.options.fraction);
+        let speed = (wheelData.pixelY) ? wheelData.pixelY : 30;
+        this.intro += (speed * this.options.fraction);
         this.intro = (this.intro <= 1) ? 1 : this.clip(this.intro, 1, this.limitpage);
 
-        this.track += wheelData.pixelY;
+        this.track += speed;
         this.track = (this.track <= 1) ? 1 : this.clip(this.track, 1, 10000);
 
         this.finish();
         this.update();
 
         if(this.pageAcitve) {
-          this.page += (wheelData.pixelY * this.options.fraction);
+          this.page += (speed * this.options.fraction);
           this.page = (this.page <= 0.2) ? 0.2 : this.clip(this.page, 0.2, this.limit);
 
           this.last = this.page / 400;
-          console.log(this.last)
           zoom.classList.add('hide');
           page.classList.add('show');
         }
       };
       this.init = () => {
         window.addEventListener(normalizeWheel.getEventType(), (e) => this.scroll(e), {passive: true});
-        window.addEventListener('touchmove', (e) => this.scroll(e), {passive: true});
+        window.addEventListener('touchmove', (e) => this.scroll(e));
       }
     }
   }
