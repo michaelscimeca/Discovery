@@ -1,15 +1,14 @@
-import gsap from "gsap";
+// import gsap from "gsap";
 const normalizeWheel = require('./facebook-normalize-wheel');
-const dat = require('dat.gui');
-const gui = new dat.GUI();
+// const dat = require('dat.gui');
+// const gui = new dat.GUI();
 module.exports = function () {
   const zoom = document.querySelector('#zoom-in');
   const page = document.querySelector('#page');
-  const h1 = document.querySelector('h1');
   const rows = document.querySelectorAll('.row');
 
   class zoomSetup {
-    constructor(zoom, page, sections) {
+    constructor(zoom, page, rows) {
       this.intro = 1;
       this.page = 0.2;
       this.pageScaleSpeed = 0.001;
@@ -40,32 +39,34 @@ module.exports = function () {
         rows.forEach((item, i) => {
           item.style.transform = `scale(${this.clip((this.last * 2), 0, 1)})`;
         });
-      },
+      };
+      this.scroll = (e) => {
+        this.flag = true;
+        setTimeout(() => this.flag = false, 300);
+        const wheelData = normalizeWheel(e);
+
+        this.intro += (wheelData.pixelY * this.options.fraction);
+        this.intro = (this.intro <= 1) ? 1 : this.clip(this.intro, 1, this.limitpage);
+
+        this.track += wheelData.pixelY;
+        this.track = (this.track <= 1) ? 1 : this.clip(this.track, 1, 10000);
+
+        this.finish();
+        this.update();
+
+        if(this.pageAcitve) {
+          this.page += (wheelData.pixelY * this.options.fraction);
+          this.page = (this.page <= 0.2) ? 0.2 : this.clip(this.page, 0.2, this.limit);
+
+          this.last = this.page / 400;
+          console.log(this.last)
+          zoom.classList.add('hide');
+          page.classList.add('show');
+        }
+      };
       this.init = () => {
-        window.addEventListener(normalizeWheel.getEventType(), (e) => {
-          this.flag = true;
-          setTimeout(() => this.flag = false, 300);
-          const wheelData = normalizeWheel(e);
-
-          this.intro += (wheelData.pixelY * this.options.fraction);
-          this.intro = (this.intro <= 1) ? 1 : this.clip(this.intro, 1, this.limitpage);
-
-          this.track += wheelData.pixelY;
-          this.track = (this.track <= 1) ? 1 : this.clip(this.track, 1, 10000);
-
-          this.finish();
-          this.update();
-
-          if(this.pageAcitve) {
-            this.page += (wheelData.pixelY * this.options.fraction);
-            this.page = (this.page <= 0.2) ? 0.2 : this.clip(this.page, 0.2, this.limit);
-
-            this.last = this.page / 400;
-            console.log(this.last)
-            zoom.classList.add('hide');
-            page.classList.add('show');
-          }
-        });
+        window.addEventListener(normalizeWheel.getEventType(), (e) => this.scroll(e), {passive: true});
+        window.addEventListener('touchmove', (e) => this.scroll(e), {passive: true});
       }
     }
   }
