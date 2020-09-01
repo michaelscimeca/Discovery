@@ -25,20 +25,12 @@ module.exports = function () {
       this.clip = (number, min, max) => {
         return Math.max(min, Math.min(number, max));
       };
-      this.finish = () => {
-        if (this.intro >= this.limit) {
-          console.log('finished')
-          this.pageAcitve = true;
-        }
-      };
+      this.finish = () => this.pageAcitve = (this.intro >= this.limit) ? true : false;
       this.update = () => {
         if(!this.flag) return;
-        requestAnimationFrame( this.update );
+        requestAnimationFrame(this.update);
         zoom.style.transform = `scale(${this.intro})`;
-        // page.style.transform = `scale(${this.page * this.pageScaleSpeed})`
-        rows.forEach((item, i) => {
-          item.style.transform = `scale(${this.clip((this.last * 2), 0, 1)})`;
-        });
+        rows.forEach((item, i) => item.style.transform = `scale(${this.clip((this.last * 2), 0, 1)})`);
       };
       this.scroll = (e) => {
         this.flag = true;
@@ -71,6 +63,6 @@ module.exports = function () {
     }
   }
 
-  let z = new zoomSetup(zoom, page, h1);
+  let z = new zoomSetup(zoom, page, rows);
   z.init();
 };
