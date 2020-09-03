@@ -1,10 +1,10 @@
-import gsap from 'gsap';
+// import gsap from 'gsap';
 module.exports = function () {
   const line = document.querySelectorAll('.line');
-  const triggerline = document.querySelector('.triggerline');
+  // const triggerline = document.querySelector('.triggerline');
   const container = document.querySelector('ul#sections');
   const sections = document.querySelectorAll('ul#sections li');
-  const bar = document.querySelector('#vertical-bar');
+  // const bar = document.querySelector('#vertical-bar');
   const mask = document.querySelector('.logo rect');
   const logo = document.querySelector('.logo');
   class createSections {
@@ -20,9 +20,12 @@ module.exports = function () {
       this.logoDistance = this.logoData.width;
       this.mask = mask;
       this.percentage = 0;
+      this.progress = 0;
       this.fill = 0;
       this.trigger = 0;
+      this.choice = '';
       this.flag = false;
+      this.switch = false;
       this.clip = (number, min, max) => {
         return Math.max(min, Math.min(number, max));
       };
@@ -42,7 +45,6 @@ module.exports = function () {
       };
       this.update = () => {
         if (!this.flag) return;
-        this.style(triggerline, this.locationTracker);
         this.style(this.mask, this.fill);
         requestAnimationFrame(this.update);
       };
@@ -63,16 +65,16 @@ module.exports = function () {
         // Track location
         this.locationTracker = (window.pageXOffset + window.innerWidth) - this.offsetLogo;
         this.sectionData.forEach((section, i) => {
-          this.trigger = this.sectionData[i].start;
-          this.ends = this.sectionData[i].end;
-          this.percentage = ((this.locationTracker - this.trigger) / this.logoDistance) * 100;
-          this.progress = this.clip(this.zero(this.percentage), 0, 100);
-
-          if (this.locationTracker >= this.trigger && this.locationTracker <= this.ends) {
+          if (i < 1) return;
+          // // TODO: Figure out how to reset mask to after completed
+          if (this.locationTracker >= this.sectionData[i].start && this.locationTracker <= this.sectionData[i].end) {
+            this.progress = this.clip(this.zero(((this.locationTracker - this.sectionData[i].start) / this.logoDistance) * 100), 0, 100);
             if (this.sectionData[i].theme === 'white') {
-              // this.fill = Math.floor((this.progress / 100) * 300);
-            } else if (this.sectionData[i].theme === 'black') {
-              this.fill = Math.floor(-(this.progress / 100) * 300);
+              this.fill = (this.fill >= 0) ? (this.progress / 100) * 300 : 0;
+              if (this.fill === 100) this.fill = 300;
+            }
+            if (this.sectionData[i].theme === 'black') {
+              this.fill = (this.fill >= 0) ? (this.progress / 100) * 300 : 0;
             }
           }
         });
