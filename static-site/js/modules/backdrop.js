@@ -1,12 +1,10 @@
-// import gsap from 'gsap';
 module.exports = function () {
   const line = document.querySelectorAll('.line');
-  // const triggerline = document.querySelector('.triggerline');
   const container = document.querySelector('ul#sections');
   const sections = document.querySelectorAll('ul#sections li');
-  // const bar = document.querySelector('#vertical-bar');
   const mask = document.querySelector('.logo rect');
   const logo = document.querySelector('.logo');
+
   class createSections {
     constructor (container, sections, logo, mask, app, line) {
       this.container = container;
@@ -21,7 +19,13 @@ module.exports = function () {
       this.mask = mask;
       this.percentage = 0;
       this.progress = 0;
+      this.fillblack = 0;
+      this.fillwhite = 0;
       this.fill = 0;
+      this.info = {
+        color: 'black',
+        index: 0
+      };
       this.trigger = 0;
       this.choice = '';
       this.flag = false;
@@ -66,16 +70,11 @@ module.exports = function () {
         this.locationTracker = (window.pageXOffset + window.innerWidth) - this.offsetLogo;
         this.sectionData.forEach((section, i) => {
           if (i < 1) return;
-          // // TODO: Figure out how to reset mask to after completed
+          // Section your in
           if (this.locationTracker >= this.sectionData[i].start && this.locationTracker <= this.sectionData[i].end) {
             this.progress = this.clip(this.zero(((this.locationTracker - this.sectionData[i].start) / this.logoDistance) * 100), 0, 100);
-            if (this.sectionData[i].theme === 'white') {
-              this.fill = (this.fill >= 0) ? (this.progress / 100) * 300 : 0;
-              if (this.fill === 100) this.fill = 300;
-            }
-            if (this.sectionData[i].theme === 'black') {
-              this.fill = (this.fill >= 0) ? (this.progress / 100) * 300 : 0;
-            }
+            if (this.sectionData[i].theme === 'white') this.fill = this.zero(300 - (this.progress / 100) * 300);
+            if (this.sectionData[i].theme === 'black') this.fill = -this.zero((this.progress / 100) * 300);
           }
         });
         this.update();
@@ -90,11 +89,8 @@ module.exports = function () {
       window.addEventListener('scroll', (e) => this.scroll());
     }
   }
-
   new createSections(container, sections, logo, mask, line);
 };
 
-// TODO: 1: get correct data on window resize
-// TODO: 2: setup all sections to handle logo Transition
-
+// TODO: 4: get correct data on window resize
 // Inital device tests worked.

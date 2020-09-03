@@ -57,13 +57,18 @@
   },
   "dependencies": {
     "capture": "^0.1.0",
+    "cookies": "^0.8.0",
     "dat.gui": "^0.7.7",
+    "dom-to-image": "^2.6.0",
     "express": "^4.17.1",
+    "fabric": "^4.1.0",
     "foundation-sites": "^6.5.3",
     "fs": "0.0.1-security",
     "gsap": "^3.5.0",
     "gulp-sync": "^0.1.4",
     "hbs": "^4.0.4",
-    "lottie-web": "^5.7.3"
+    "lottie-web": "^5.7.3",
+    "prismic-dom": "^2.2.3",
+    "prismic-javascript": "^3.0.2"
   }
 }
