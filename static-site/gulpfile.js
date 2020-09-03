@@ -50,6 +50,7 @@ function javascript () {
     .pipe(source('app.js'))
     .pipe(buffer())
     .pipe(gulpif(options.env !== 'production', sourcemaps.init({ loadMaps: true })))
+    .pipe(uglify())
     .pipe(gulpif(options.env !== 'production', sourcemaps.write('./')))
     .pipe(gulp.dest(`${DIST_DIRECTORY}/js/`))
     .pipe(gulpif(options.env !== 'production' && options.live === 'true', bs.reload({ stream: true })));

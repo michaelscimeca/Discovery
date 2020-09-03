@@ -19,16 +19,16 @@ ul {
 
 }
 
-html,
-body {
-  overflow: hidden;
-}
-body {
-  // height: 100vh;
-  // height: 1000vh;
-  overflow: hidden;
-
-}
+// html,
+// body {
+//   overflow: hidden;
+// }
+// body {
+//   // height: 100vh;
+//   // height: 1000vh;
+//   overflow: hidden;
+//
+// }
 
 h1 {
   color: #fff;
@@ -39,7 +39,7 @@ h1 {
   background-image: url('/img/depositphotos_120899118-stock-photo-painting-artistic-bright-color-oil.jpg');
   background-repeat:  no-repeat;
   background-size: cover;
-  height: 1000vh;
+  height: 100vh;
   // min-width: 100%;
 }
 
@@ -167,7 +167,8 @@ svg {
   transition: color 250ms ease-in;
 }
 
-.line {
+.line,
+.triggerline {
   height: 100vh;
   width: 2px;
   position: absolute;
@@ -175,6 +176,12 @@ svg {
   z-index: 333333;
 }
 
+.line {
+  background-color: red;
+}
+.triggerline {
+  background-color: green;
+}
 
 ul#sections {
   li {

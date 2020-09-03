@@ -31,7 +31,7 @@
     "babelify": "^10.0.0",
     "browser-sync": "^2.26.5",
     "browserify": "^16.3.0",
-    "eslint": "^6.1.0",
+    "eslint": "^6.8.0",
     "eslint-config-semistandard": "^14.0.0",
     "eslint-config-standard": "^13.0.1",
     "eslint-plugin-import": "^2.18.2",
@@ -56,25 +56,14 @@
     "vinyl-source-stream": "^2.0.0"
   },
   "dependencies": {
-    "@pixi/filter-blur": "^5.3.3",
-    "@seregpie/three.text-sprite": "^2.0.0",
-    "@seregpie/three.text-texture": "^2.0.1",
-    "backdropper": "^0.1.2",
-    "body-scroll-lock": "^3.0.3",
-    "cookies": "^0.7.3",
+    "capture": "^0.1.0",
     "dat.gui": "^0.7.7",
     "express": "^4.17.1",
     "foundation-sites": "^6.5.3",
+    "fs": "0.0.1-security",
     "gsap": "^3.5.0",
     "gulp-sync": "^0.1.4",
     "hbs": "^4.0.4",
-    "lottie-web": "^5.7.3",
-    "prismic-dom": "^2.1.0",
-    "prismic-javascript": "^2.1.1",
-    "stats-js": "^1.0.1",
-    "three": "^0.120.0",
-    "three-orbit-controls": "^82.1.0",
-    "three.textsprite": "^20.0.0",
-    "three.texttexture": "^22.0.0"
+    "lottie-web": "^5.7.3"
   }
 }
