@@ -72,5 +72,5 @@ module.exports = function () {
   new createSections(container, sections, logo, mask);
 };
 
-// TODO: 4: get correct data on window resize
+// TODO: 4: get correct data on window resize & random load location
 // Inital device tests worked.

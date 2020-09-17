@@ -1,9 +1,8 @@
 var Modules = {
   init: function () {
-    require('./modules/backdrop')();
+    // require('./modules/backdrop')();
     // require('./modules/zoom')();
-    // require('./modules/lotti')();
-
+    require('./modules/mouse')();
   }
 };
 

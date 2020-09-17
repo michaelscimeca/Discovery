@@ -65,10 +65,10 @@ app.get('/zoom', (req, res, next) => {
   });
 });
 
-app.get('/lotti', (req, res, next) => {
+app.get('/mouse', (req, res, next) => {
   req.prismic.api.getSingle('home_page').then((document) => {
     if (document) {
-      res.render('lotti', {
+      res.render('mouse', {
         // document,
         title: 'Hello...',
         description: 'Description',
