@@ -1,59 +1,41 @@
-// // Colors
-//
-//
-// /************************************
-// * Hover Mixin
-// ************************************/
-// @mixin hover {
-//   .no-touchevents & {
-//     &:hover {
-//       @content;
-//     }
-//   }
-// }
-//
-//
-// ul {
-//   margin: 0;
-//   list-style: none;
-// }
-//
-// html,
-// body {
-//   overflow: hidden;
-// }
 html,
 body {
   height: 100vh;
-  height: 1000vh;
+  width: 100vw;
   background-color: #171717;
   cursor: none;
 }
 
+.transition {
+  transition: all 250ms linear;
+}
+
 #cursor {
-  position: absolute;
+  position: fixed;
   height: 18px;
   width: 18px;
   border-radius: 50%;
-  background-color: red;
+
   &.triggered {
     background-color: green;
   }
   &.active {
-    background-color: red;
+    background-color: white;
   }
 }
 
 #detection {
   background-color: red;
-  width: 200px;
-  height: 100px;
+  width: 30px;
+  height: 30px;
+  margin-top: 300px;
 }
 
 #detection-two {
-  background-color: blue;
-  width: 200px;
-  height: 100px;
+  background-color: #f5439e;
+  margin-top: 300px;
+  width: 50px;
+  height: 50px;
 }
 
 
