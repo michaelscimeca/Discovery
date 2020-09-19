@@ -3,7 +3,7 @@ body {
   height: 100vh;
   width: 100vw;
   background-color: #171717;
-  cursor: none;
+  // cursor: none;
 }
 
 .transition {
@@ -11,7 +11,7 @@ body {
 }
 
 #cursor {
-  position: fixed;
+  position: absolute;
   z-index: 99999999999999999;
   height: 18px;
   width: 18px;

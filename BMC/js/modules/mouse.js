@@ -6,6 +6,10 @@ module.exports = function () {
   const items = document.querySelectorAll('[data-grab="link"]');
   class Mouse {
     constructor (cursor, items) {
+      this.current = {
+        x: 0,
+        y: 0
+      };
       this.mX = 0;
       this.mY = 0;
       this.mcX = 0;
@@ -18,26 +22,27 @@ module.exports = function () {
       this.distance = 0;
       this.domData = [];
       this.build = () => {
-        items.forEach((element, i) => {
+        items.forEach((e, i) => {
           this.domData.push({
-            element: element,
+            element: e,
             index: i,
-            proximity: element.dataset.proximity,
-            type: element.dataset.grab,
-            height: element.getBoundingClientRect().height,
-            width: element.getBoundingClientRect().width,
-            x: element.getBoundingClientRect().x,
-            y: element.getBoundingClientRect().y,
-            cX: element.getBoundingClientRect().x + (element.getBoundingClientRect().width / 2) - (this.size / 2),
-            cY: element.getBoundingClientRect().y + (element.getBoundingClientRect().height / 2) - (this.size / 2)
+            proximity: e.dataset.proximity,
+            type: e.dataset.grab,
+            height: e.getBoundingClientRect().height,
+            width: e.getBoundingClientRect().width,
+            x: e.getBoundingClientRect().x,
+            y: e.getBoundingClientRect().y,
+            cX: e.getBoundingClientRect().x + (e.getBoundingClientRect().width / 2) - (this.size / 2),
+            cY: e.getBoundingClientRect().y + (e.getBoundingClientRect().height / 2) - (this.size / 2)
           });
         });
+        console.log(this.domData);
       };
       this.resize = () => {
         this.build();
       };
-      this.calculateDistance = (element, x, y) => {
-        const elm = element.getBoundingClientRect();
+      this.calculateDistance = (e, x, y) => {
+        const elm = e.getBoundingClientRect();
         return Math.floor(
           Math.sqrt(
             Math.pow(x - (elm.left + (elm.width / 2)), 2) +
@@ -64,37 +69,29 @@ module.exports = function () {
       this.update = () => {
         if (!this.runRAF) return;
         this.domData.forEach((item, i) => {
-          this.distance = this.calculateDistance(item.element, this.mX, this.mY);
+          this.distance = this.calculateDistance(item.element, this.mX, this.mX);
           if (this.distance <= item.proximity) {
-            console.log('position cursor');
-            // TweenMax.to(cursor, 0.5, {
-            //   y: item.cY,
-            //   x: item.cX
-            // });
-          } else {
-            console.log('reg cursor');
-            TweenMax.to(cursor, 0.5, {
+            this.current = {
+              y: item.cY,
+              x: item.cX,
+              width: item.width,
+              height: item.height
+            };
+          } else if (this.distance >= item.proximity) {
+            this.current = {
               y: this.mcY,
-              x: this.mcX
-            });
+              x: this.mcX,
+              width: this.size,
+              height: this.size
+            };
           }
         });
-        //
-        // for (let i = 0; i < this.domData.length; i++) {
-        //   this.distance = this.calculateDistance(this.domData[i].element, this.mX, this.mY);
-        //   if (this.distance < this.domData[i].proximity) {
-        //     console.log(this.domData[i].cX, this.domData[i].element)
-        //     // TweenLite.to(cursor, {
-        //     //   duration: 0.5,
-        //     //   x: this.domData[i].cX,
-        //     //   y: this.domData[i].cY
-        //     // });
-        //
-        //     cursor.style.transform = `translate(${this.domData[i].cX}px, ${this.recenter(this.domData[i].cY)}px)`;
-        //   } else {
-        //     cursor.style.transform = `translate(${this.mcX}px, ${this.mcY}px)`;
-        //   }
-        // }
+        TweenMax.to(cursor, 0.5, {
+          y: this.current.y,
+          x: this.current.x,
+          height: this.current.height,
+          width: this.current.width
+        });
         requestAnimationFrame(this.update);
       };
       this.init = () => {
