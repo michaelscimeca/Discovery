@@ -81,9 +81,11 @@ module.exports = function () {
               const inRange = (distance <= e.dataset.proximity);
               const dom = (inRange) ? e : '';
               const returns = {
-                dom: dom,
+                element: dom,
                 distance: distance,
-                inRange: inRange
+                inRange: inRange,
+                height: e.getBoundingClientRect().height,
+                width: e.getBoundingClientRect().width
               };
               return returns;
             }
@@ -123,25 +125,6 @@ module.exports = function () {
         if (!this.runRAF) return;
         this.domData.forEach((item, i) => {
           console.log(item.detect(this.mX, this.mY));
-
-        // this.distance = this.calculateDistance(item.element, this.mX, this.mX);
-        // console.log(this.distance, item.index);
-        // console.log(this.distance, item.index);
-        // if (this.distance <= item.proximity) {
-        //   this.current = {
-        //     y: item.y,
-        //     x: item.x,
-        //     width: item.width,
-        //     height: item.height
-        //   };
-        // } else if (this.distance >= item.proximity) {
-        //   this.current = {
-        //     y: this.mcY,
-        //     x: this.mcX,
-        //     width: this.size,
-        //     height: this.size
-        //   };
-        // }
         });
         TweenMax.to(cursor, 0.5, {
           y: this.current.y,
