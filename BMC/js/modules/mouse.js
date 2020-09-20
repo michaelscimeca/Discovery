@@ -7,18 +7,31 @@ module.exports = function () {
 
   class Mouse {
     constructor (cursor, items) {
-      this.addElement = (kind, classname, attach, y, x, circle, size) => {
-        const n = document.createElement(kind);
-        n.className = classname;
-        attach.appendChild(n);
-        console.log(circle)
-       n.style.setProperty('--offset', `-${circle / 2}px`);
-       n.style.setProperty('--circle', `${circle}px`);
-        n.style.transform = `translate(${y}px, ${x}px)`;
+      this.options = {
+        activeTest: true
       };
       this.test = (data) => {
+        const addElement = (kind, classname, attach, y, x, circle, size) => {
+          const n = document.createElement(kind);
+          n.className = classname;
+          attach.appendChild(n);
+          const styles = {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            borderColor: 'white',
+            backgroundColor: 'black',
+            transform: `translate(${y}px, ${x}px)`,
+            width: '10px',
+            height: '10px'
+          };
+          n.style.setProperty('--offset', `-${circle / 2}px`);
+          n.style.setProperty('--circle', `${circle}px`);
+          n.style.setProperty('--border-color', `${styles.borderColor}`);
+          Object.assign(n.style, styles);
+        };
         data.forEach((dot, i) =>
-          this.addElement(
+          addElement(
             'div',
             'dot',
             body,
@@ -66,17 +79,17 @@ module.exports = function () {
                 )
               ) - Math.round(elm.width / 2);
               const inRange = (distance <= e.dataset.proximity);
-              const dom = (inRange) ? e : null;
+              const dom = (inRange) ? e : '';
               const returns = {
-              // dom: dom,
-                distance: distance
-              // inRange: inRange
+                dom: dom,
+                distance: distance,
+                inRange: inRange
               };
               return returns;
             }
           });
         });
-        this.test(this.domData);
+        if (this.options.activeTest) this.test(this.domData);
       };
       this.resize = () => {
         this.build();
@@ -109,7 +122,7 @@ module.exports = function () {
       this.update = () => {
         if (!this.runRAF) return;
         this.domData.forEach((item, i) => {
-          // console.log(item.detect(this.mX, this.mY));
+          console.log(item.detect(this.mX, this.mY));
 
         // this.distance = this.calculateDistance(item.element, this.mX, this.mX);
         // console.log(this.distance, item.index);
