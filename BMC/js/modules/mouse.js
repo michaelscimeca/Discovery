@@ -4,8 +4,31 @@ module.exports = function () {
   const cursor = document.querySelector('#cursor');
   const body = document.querySelector('body');
   const items = document.querySelectorAll('[data-grab="link"]');
+
   class Mouse {
     constructor (cursor, items) {
+      this.addElement = (kind, classname, attach, y, x, circle, size) => {
+        const n = document.createElement(kind);
+        n.className = classname;
+        attach.appendChild(n);
+        console.log(circle)
+       n.style.setProperty('--offset', `-${circle / 2}px`);
+       n.style.setProperty('--circle', `${circle}px`);
+        n.style.transform = `translate(${y}px, ${x}px)`;
+      };
+      this.test = (data) => {
+        data.forEach((dot, i) =>
+          this.addElement(
+            'div',
+            'dot',
+            body,
+            (dot.cX + 4),
+            (dot.cY + 4),
+            (dot.proximity * 2) + dot.width,
+            dot.width
+          )
+        );
+      };
       this.current = {
         x: 0,
         y: 0
@@ -33,10 +56,27 @@ module.exports = function () {
             x: e.getBoundingClientRect().x,
             y: e.getBoundingClientRect().y,
             cX: e.getBoundingClientRect().x + (e.getBoundingClientRect().width / 2) - (this.size / 2),
-            cY: e.getBoundingClientRect().y + (e.getBoundingClientRect().height / 2) - (this.size / 2)
+            cY: e.getBoundingClientRect().y + (e.getBoundingClientRect().height / 2) - (this.size / 2),
+            detect: (x, y) => {
+              const elm = e.getBoundingClientRect();
+              const distance = Math.floor(
+                Math.sqrt(
+                  Math.pow(x - (elm.left + (elm.width / 2)), 2) +
+                Math.pow(y - (elm.top + (elm.height / 2)), 2)
+                )
+              ) - Math.round(elm.width / 2);
+              const inRange = (distance <= e.dataset.proximity);
+              const dom = (inRange) ? e : null;
+              const returns = {
+              // dom: dom,
+                distance: distance
+              // inRange: inRange
+              };
+              return returns;
+            }
           });
         });
-        console.log(this.domData);
+        this.test(this.domData);
       };
       this.resize = () => {
         this.build();
@@ -46,7 +86,7 @@ module.exports = function () {
         return Math.floor(
           Math.sqrt(
             Math.pow(x - (elm.left + (elm.width / 2)), 2) +
-            Math.pow(y - (elm.top + (elm.height / 2)), 2)
+          Math.pow(y - (elm.top + (elm.height / 2)), 2)
           )
         ) - Math.round(elm.width / 2);
       };
@@ -69,22 +109,26 @@ module.exports = function () {
       this.update = () => {
         if (!this.runRAF) return;
         this.domData.forEach((item, i) => {
-          this.distance = this.calculateDistance(item.element, this.mX, this.mX);
-          if (this.distance <= item.proximity) {
-            this.current = {
-              y: item.cY,
-              x: item.cX,
-              width: item.width,
-              height: item.height
-            };
-          } else if (this.distance >= item.proximity) {
-            this.current = {
-              y: this.mcY,
-              x: this.mcX,
-              width: this.size,
-              height: this.size
-            };
-          }
+          // console.log(item.detect(this.mX, this.mY));
+
+        // this.distance = this.calculateDistance(item.element, this.mX, this.mX);
+        // console.log(this.distance, item.index);
+        // console.log(this.distance, item.index);
+        // if (this.distance <= item.proximity) {
+        //   this.current = {
+        //     y: item.y,
+        //     x: item.x,
+        //     width: item.width,
+        //     height: item.height
+        //   };
+        // } else if (this.distance >= item.proximity) {
+        //   this.current = {
+        //     y: this.mcY,
+        //     x: this.mcX,
+        //     width: this.size,
+        //     height: this.size
+        //   };
+        // }
         });
         TweenMax.to(cursor, 0.5, {
           y: this.current.y,
