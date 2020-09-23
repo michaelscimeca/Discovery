@@ -10,7 +10,7 @@ html,body,
 a:link,
 a:active,
 a:hover {
-  // cursor: none;
+  cursor: none;
 }
 
 .transition {
@@ -111,35 +111,51 @@ a:hover {
 
 
 #cursor {
-    pointer-events: none;
-    position: fixed;
-    display: block;
-    border-radius: 50%;
-    transform-origin: center center;
-    perspective: none;
-    transform: translateZ(2px);
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    -webkit-filter: url(#goo);
-    filter: url(#goo);
-    mix-blend-mode: color-dodge;
+  background-color: white;
+  pointer-events: none;
+  position: fixed;
+  display: block;
+  border-radius: 50%;
+  transform-origin: center center;
+  perspective: none;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  z-index: 1000;
+  -webkit-filter: url(#goo);
+  filter: url(#goo);
+  mix-blend-mode: color-dodge;
+}
+
+#cursor-drag {
+  pointer-events: none;
+  position: absolute;
+  perspective: none;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  z-index: 1000;
+  -webkit-filter: url(#goo);
+  filter: url(#goo);
+  mix-blend-mode: color-dodge;
 }
 
 
+.trail,
+canvas {
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#adf6bd+0,2989d8+50,3077f3+100 */
+background: rgb(173,246,189); /* Old browsers */
+background: -moz-linear-gradient(-45deg,  rgba(173,246,189,1) 0%, rgba(41,137,216,1) 50%, rgba(48,119,243,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg,  rgba(173,246,189,1) 0%,rgba(41,137,216,1) 50%,rgba(48,119,243,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg,  rgba(173,246,189,1) 0%,rgba(41,137,216,1) 50%,rgba(48,119,243,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 
-
-
-#cursor .trail {
-    /* className for the trail elements */
-    position: absolute;
-    display: block;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background-color: #fff;
-    -webkit-transform-origin: center center;
-    transform-origin: center center;
-    -webkit-transform: matrix(1, 0, 0, 1, -50px, -50px);
-    transform: matrix(1, 0, 0, 1, -50px, -50px);
+  position: absolute;
+  // background-color: red;
+  display: block;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  transform-origin: center center;
 }
