@@ -1,12 +1,9 @@
 'use strict';
-import { TweenMax, Elastic } from 'gsap';
-const Granim = require('granim');
+import { TweenMax, Power3 } from 'gsap';
 module.exports = function () {
   const cursor = document.querySelector('#cursor');
   const cursorDrag = document.querySelector('#cursor-drag');
-
   // const shadow = document.querySelector('#shadow');
-
   const body = document.querySelector('body');
   const items = document.querySelectorAll('[data-grab="link"]');
 
@@ -48,6 +45,28 @@ module.exports = function () {
           )
         );
       };
+      this.na = [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ];
+      this.indexColor = 0;
+      this.g = [
+        '#ADF6BD',
+        '#A0F5BF',
+        '#93F5C4',
+        '#87F5CD',
+        '#7AF4DA',
+        '#6EF4EA',
+        '#61EAF4',
+        '#55D2F3',
+        '#48B7F3',
+        '#3C98F3',
+        '#2F76F2'
+      ];
       this.mX = 0;
       this.mY = 0;
       this.mcX = 0;
@@ -64,12 +83,22 @@ module.exports = function () {
       this.recenter = (c) => {
         return c - (this.size / 2);
       };
-      this.dot = function () {
+      this.Dot = function (color) {
         this.x = 0;
         this.y = 0;
         this.node = (() => {
-          const n = document.createElement('div');
+          const n = document.createElement('svg');
           n.className = 'trail';
+          n.style.backgroundColor = color;
+          n.innerHTML = `
+        <defs>
+        <filter id="goo">
+        <feGaussianBlur  stdDeviation="12" />
+        <feColorMatrix  values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 21 -9" />
+        <feBlend in="SourceGraphic" in2="colormatrix" />
+        </filter>
+        </defs>
+        `;
           cursorDrag.appendChild(n);
           return n;
         })();
@@ -78,26 +107,39 @@ module.exports = function () {
         let scale = 1;
         let nextDot = {};
         let rotate = 0;
+
+
         this.dots.forEach((dot, index, dots) => {
+
           nextDot = dots[index + 1] || dots[0];
           scale = scale - 0.05;
+          // console.log(scale, index)
           dot.x = x;
           dot.y = y;
           rotate = Math.floor((Math.random() * 10) + 1) * index;
-          TweenMax.to(nextDot.node, 0.5, {
+          console.log(this.indexColor)
+
+          for (let i = 0; i < this.g.length; i++) {
+            this.g[0] = this.g[this.g.length]
+            this.g[this.g.length] = this.g[0]
+          }
+          this.indexColor = this.g[0];
+
+          TweenMax.to(dot.node, 0.5, {
             y: y,
             x: x,
             scale: scale,
             height: this.current.height,
             width: this.current.width,
-            rotation: rotate
+            backgroundColor: `${this.indexColor}`
+          // rotation: rotate
           });
           // nextDot.node.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
           // nextDot.node.style.width = `${this.current.width}px`;
           // nextDot.node.style.height = `${this.current.height}px`;
-
-          x += (nextDot.x - dot.x) * 0.4;
-          y += (nextDot.y - dot.y) * 0.4;
+          // console.log(this.g);
+          x += (nextDot.x - dot.x) * 0.5;
+          y += (nextDot.y - dot.y) * 0.5;
         });
       };
       this.build = () => {
@@ -141,9 +183,10 @@ module.exports = function () {
             }
           });
         });
+        this.g = this.g.reverse();
 
-        for (let i = 0; i < 12; i++) {
-          const d = new this.dot();
+        for (let i = 0; i < this.g.length; i++) {
+          const d = new this.Dot(this.g[i]);
           this.dots.push(d);
         }
 
@@ -225,7 +268,7 @@ module.exports = function () {
   const mouse = new Mouse(cursorDrag, items);
   mouse.init();
 
-  // dots is an array of Dot objects,
-  // mouse is an object used to track the X and Y position
-  // of the mouse, set with a mousemove event listener below
+// dots is an array of Dot objects,
+// mouse is an object used to track the X and Y position
+// of the mouse, set with a mousemove event listener below
 };
